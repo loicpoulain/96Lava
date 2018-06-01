@@ -9,6 +9,7 @@ services:
       - /dev:/dev
       - /boot:/boot
       - /lib/modules:/lib/modules
+      - /sys/class/gpio:/sys/class/gpio
 
 networks:
   default:
