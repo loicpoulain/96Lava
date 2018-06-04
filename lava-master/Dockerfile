@@ -25,6 +25,7 @@ RUN /start.sh &&\
 	echo "from django.contrib.auth.models import User; User.objects.create_superuser('$admin_username', '$admin_email', '$admin_password')" | lava-server manage shell && \
 	/stop.sh
 
+COPY config/device-types/*.jinja2 /etc/lava-server/dispatcher-config/device-types/
 COPY config/devices/*.jinja2 /etc/lava-server/dispatcher-config/devices/
 COPY scripts/populate.sh /
 RUN /start.sh \
