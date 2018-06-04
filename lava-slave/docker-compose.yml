@@ -9,7 +9,8 @@ services:
       - /dev:/dev
       - /boot:/boot
       - /lib/modules:/lib/modules
-      - /sys/class/gpio:/sys/class/gpio
+      - /sys/class/gpio:/sys/class/gpio:rw
+    privileged: true
     ports:
       - "69:69" # tftp
 
