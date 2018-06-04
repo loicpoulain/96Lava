@@ -8,6 +8,7 @@ for gpio in ${db820c_gpios[@]}; do
 	echo ${gpio} > /sys/class/gpio/export
 	echo out > /sys/class/gpio/gpio${gpio}/direction
 	echo 0 > /sys/class/gpio/gpio${gpio}/value
+	chmod o+w /sys/class/gpio/gpio${gpio}/value
 	ln -s /sys/class/gpio/gpio${gpio} /dev/gpio${ls_gpios[${i}]}
 	i=$(($i+1))
 done
