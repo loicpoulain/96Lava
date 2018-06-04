@@ -23,10 +23,10 @@ start () {
 
 start postgresql
 start apache2
-start lava-logs
 start lava-publisher
 start lava-server
 start lava-server-gunicorn
 start lava-master
 
+service lava-server restart
 postgres-ready
