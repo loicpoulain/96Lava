@@ -13,6 +13,7 @@ services:
     privileged: true
     ports:
       - "69:69" # tftp
+      - "2049:2049" # nfs4
 
 networks:
   default:
