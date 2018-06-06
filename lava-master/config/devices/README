@@ -1,0 +1,4 @@
+Devices dictionnaries in this directory are automatically added to the Lava
+database via the /config/populate.sh script. It's important to keep the
+following naming convention: device-type_device-id.jinja2
+(e.g. qemu_0.jinja2)
