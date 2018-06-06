@@ -15,6 +15,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -q -y install \
 
 COPY scripts/start.sh /
 COPY scripts/stop.sh /
+COPY scripts/gpio.sh /
 COPY scripts/db820c-init.sh /
 COPY config/tftpd-hpa /etc/default/tftpd-hpa
 COPY config/ser2net.conf /etc/ser2net.conf

@@ -1,6 +1,6 @@
 {% extends 'db410c-uboot.jinja2' %}
 {% set exclusive = 'True' %}
 {% set connection_command = 'telnet localhost 2000' %}
-{% set hard_reset_command = 'echo 0 > /dev/gpio23/value' %}
-{% set power_off_command = 'echo 0 > /dev/gpio23/value' %}
-{% set power_on_command = 'echo 1 > /dev/gpio23/value' %}
+{% set hard_reset_command = '/gpio.sh 23 off' %}
+{% set power_off_command = '/gpio.sh 23 off' %}
+{% set power_on_command = '/gpio.sh 23 on' %}
