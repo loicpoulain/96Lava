@@ -12,11 +12,3 @@
 {% set uboot_mkimage_arch = 'arm64' %}
 {% set uboot_bootx_cmd = "booti {KERNEL_ADDR} - {DTB_ADDR}" %}
 {% set uboot_needs_usb = true %}
-
-{% set run_load_fdt = "run loadfdt; " %}
-{% set load_fdt = "- setenv loadfdt 'tftp {DTB_ADDR} {DTB}'" %}
-
-{% set uboot_tftp_commands = (
-"          - setenv loadkernel 'tftp {KERNEL_ADDR} {KERNEL}'
-           - setenv loadinitrd ''
-" + load_fdt) %}
