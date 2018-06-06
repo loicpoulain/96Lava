@@ -10,12 +10,11 @@ services:
       - /boot:/boot
       - /lib/modules:/lib/modules
       - /sys/class/gpio:/sys/class/gpio:rw
+      - /tmp:/tmp
     privileged: true
     ports:
       - "69:69" # tftp
       - "2049:2049" # nfs4
-
-networks:
-  default:
-    external:
-      name: lavanet
+    network_mode: "host"
+    extra_hosts:
+      - "lava-master:127.0.0.1"

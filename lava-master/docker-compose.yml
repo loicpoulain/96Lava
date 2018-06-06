@@ -13,9 +13,6 @@ services:
       - "80:80"           # http
       - "5555:5555"       # logger
       - "5556:5556"       # master
-
-networks:
-  default:
-    external:
-      name: lavanet
-   
+    network_mode: "host"
+    extra_hosts:
+      - "worker0:127.0.0.1"
