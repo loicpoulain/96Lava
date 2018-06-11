@@ -20,9 +20,12 @@ services:
       - "worker0:127.0.0.1" # local-instance
 
   lava-worker:
-    build: ./lava-worker
     hostname: worker0
     restart: always
+    build:
+      context: ./lava-worker
+      args:
+        board: "db820c"
     volumes:
       - /dev:/dev
       - /boot:/boot

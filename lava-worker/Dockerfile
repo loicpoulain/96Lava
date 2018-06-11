@@ -14,10 +14,13 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -q -y install \
     nfs-kernel-server \
     python-netifaces
 
+# Add board specific init script
+ARG board=db820c
+COPY scripts/$board-init.sh /
+
 COPY scripts/start.sh /
 COPY scripts/stop.sh /
 COPY scripts/gpio.sh /
-COPY scripts/db820c-init.sh /
 COPY config/tftpd-hpa /etc/default/tftpd-hpa
 COPY config/ser2net.conf /etc/ser2net.conf
 COPY config/lava-dispatcher-nfs.exports /etc/exports.d/lava-dispatcher-nfs.exports
