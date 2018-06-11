@@ -11,7 +11,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -q -y install \
     qemu-system-i386 \
     e2fsprogs \
     tftpd-hpa \
-    nfs-kernel-server
+    nfs-kernel-server \
+    python-netifaces
 
 COPY scripts/start.sh /
 COPY scripts/stop.sh /

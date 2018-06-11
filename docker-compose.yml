@@ -1,0 +1,38 @@
+version: "2"
+
+services:
+
+  lava-master:
+    hostname: lava-master
+    restart: always
+    build:
+      context: ./lava-master
+      args:
+        admin_username: "admin"
+        admin_password: "password"
+        admin_email: "admin@localhost.com"
+    ports:
+      - "80:80"           # http
+      - "5555:5555"       # logger
+      - "5556:5556"       # master
+    network_mode: "host"
+    extra_hosts:
+      - "worker0:127.0.0.1" # local-instance
+
+  lava-worker:
+    build: ./lava-worker
+    hostname: worker0
+    restart: always
+    volumes:
+      - /dev:/dev
+      - /boot:/boot
+      - /lib/modules:/lib/modules
+      - /sys/class/gpio:/sys/class/gpio:rw # Power control via GPIO
+      - /tmp:/tmp                          # overlayfs nfs export workaround
+    privileged: true
+    ports:
+      - "69:69"        # tftp
+      - "2049:2049"    # nfs4
+    network_mode: "host"
+    extra_hosts:
+      - "lava-master:127.0.0.1" # local-instance
