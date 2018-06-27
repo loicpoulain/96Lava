@@ -1,6 +1,16 @@
 FROM debian:stretch-backports
 
 RUN apt -q update && DEBIAN_FRONTEND=noninteractive apt-get -q -y upgrade
+RUN DEBIAN_FRONTEND=noninteractive apt-get -q -y install \
+    wget \
+    gnupg \
+    apt-transport-https
+
+RUN echo "deb https://images.validation.linaro.org/production-repo stretch-backports main" >> /etc/apt/sources.list
+RUN wget https://images.validation.linaro.org/staging-repo/staging-repo.key.asc \
+    && apt-key add staging-repo.key.asc
+
+RUN apt -q update && DEBIAN_FRONTEND=noninteractive apt-get -q -y upgrade
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get -q -y install \
     lava-dispatcher
@@ -12,7 +22,9 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -q -y install \
     e2fsprogs \
     tftpd-hpa \
     nfs-kernel-server \
-    python-netifaces
+    python-netifaces \
+    simg2img \
+    img2simg
 
 # Add board specific init script
 ARG board=db820c
