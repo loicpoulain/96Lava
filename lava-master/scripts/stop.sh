@@ -5,4 +5,4 @@ service apache2 stop
 service lava-logs stop
 service lava-publisher stop
 service lava-server-gunicorn stop
-service lava-master stop
+service lava-server stop

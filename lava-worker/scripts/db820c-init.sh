@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Initialize all 96boards LS GPIOs
+
 db820c_gpios=( 80 29 124 24 62 507 10 8 25 26 23 133)
 ls_gpios=( 23 24 25 26 27 28 29 30 31 32 33 34)
 

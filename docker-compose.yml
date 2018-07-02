@@ -8,7 +8,7 @@ services:
     build:
       context: ./lava-master
       args:
-        admin_username: "admin"
+        admin_username: "loic"
         admin_password: "password"
         admin_email: "admin@localhost.com"
     ports:
@@ -32,6 +32,8 @@ services:
       - /lib/modules:/lib/modules
       - /sys/class/gpio:/sys/class/gpio:rw # Power control via GPIO
       - /tmp:/tmp                          # overlayfs nfs export workaround
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw # lxc
+      - /sys/devices/virtual/net:/sys/devices/virtual/net:rw # lxc net interface
     privileged: true
     ports:
       - "69:69"        # tftp

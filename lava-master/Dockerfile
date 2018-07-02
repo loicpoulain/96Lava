@@ -31,12 +31,19 @@ RUN a2dissite 000-default && \
 COPY scripts/start.sh /
 COPY scripts/stop.sh /
 
+# init.d
+COPY scripts/lava-master.init /etc/init.d/lava-server
+COPY scripts/lava-publisher.init /etc/init.d/lava-publisher
+COPY scripts/lava-logs.init /etc/init.d/lava-logs
+COPY scripts/lava-server-gunicorn.init /etc/init.d/lava-server-gunicorn
+COPY config/settings.conf /etc/lava-server/
+
 # Add Docker SuperUser.
-ARG admin_username=admin
-ARG admin_password=admin
+ARG admin_username=root
+ARG admin_password=password
 ARG admin_email=$admin_password@localhost.com
 RUN /start.sh &&\
-	echo "from django.contrib.auth.models import User; User.objects.create_superuser('$admin_username', '$admin_email', '$admin_password')" | lava-server manage shell && \
+	lava-server manage users add $admin_username --passwd $admin_password --email $admin_email --superuser &&\
 	/stop.sh
 
 # Register device-types and devices (populate script).
