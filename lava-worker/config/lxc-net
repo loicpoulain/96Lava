@@ -1,0 +1,2 @@
+# A bridge interface will be created (lxcbr0)
+USE_LXC_BRIDGE="true"
