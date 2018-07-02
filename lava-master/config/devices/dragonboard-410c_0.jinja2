@@ -1,0 +1,28 @@
+{% extends 'dragonboard-410c.jinja2' %}
+{% set hard_reset_command = '/gpio.sh 23 off' %}
+{% set pre_os_command = '/gpio.sh 23 off' %}
+{% set power_off_command = '/gpio.sh 23 off' %}
+{% set power_on_command = '/gpio.sh 23 on' %}
+{% set fastboot_serial_number = '430d3c68' %}
+{% set device_info = [{'board_id': '430d3c68'}] %}
+{% set adb_serial_number = '430d3c68' %}
+{% set connection_command = 'telnet localhost 2000' %}
+{% set pre_power_command= 'sleep 0' %}
+
+{% set flash_cmds_order = ['update',
+'ptable',
+'partition',
+'hyp',
+'modem',
+'rpm',
+'sbl1',
+'sbl2',
+'sec',
+'tz',
+'aboot',
+'boot',
+'rootfs',
+'vendor',
+'system',
+'cache',
+'userdata'] %}
