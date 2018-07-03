@@ -32,6 +32,7 @@ services:
       - /lib/modules:/lib/modules
       - /sys/class/gpio:/sys/class/gpio:rw # Power control via GPIO
       - /tmp:/tmp                          # overlayfs nfs export workaround
+      - /var/tmp/:/var/tmp/
       - /sys/fs/cgroup:/sys/fs/cgroup:rw # lxc
       - /sys/devices/virtual/net:/sys/devices/virtual/net:rw # lxc net interface
     privileged: true
