@@ -15,6 +15,11 @@ RUN apt -q update && DEBIAN_FRONTEND=noninteractive apt-get -q -y upgrade
 RUN DEBIAN_FRONTEND=noninteractive apt-get -q -y install \
     lava-dispatcher
 
+# TODO clean me
+COPY config/linaro.list /etc/apt/sources.list.d/
+RUN wget -qO - http://obs.linaro.org/linaro-overlay-buster/buster/Release.key | apt-key add -
+RUN apt -q update
+
 RUN DEBIAN_FRONTEND=noninteractive apt-get -q -y install \
     qemu-system \
     qemu-system-arm \
