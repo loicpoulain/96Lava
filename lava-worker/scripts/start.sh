@@ -4,6 +4,7 @@ service tftpd-hpa start # to retrieve kernel over network (e.g. with u-boot)
 service ser2net start # expose tty port on network
 service rpcbind start # for nfs < 3
 service nfs-kernel-server start # for network rootfs (nfs)
+service lxc-net start # lxcbr0 + dnsmasq
 
 MASTER_URL=tcp://localhost:5556
 LOGGER_URL=tcp://localhost:5555
