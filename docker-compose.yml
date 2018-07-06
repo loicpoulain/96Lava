@@ -36,6 +36,7 @@ services:
       - /var/cache:/var/cache/
       - /sys/fs/cgroup:/sys/fs/cgroup:rw # lxc
       - /sys/devices/virtual/net:/sys/devices/virtual/net:rw # lxc net interface
+      - /images:/images:ro # temp, for local image download
     privileged: true
     ports:
       - "69:69"        # tftp
