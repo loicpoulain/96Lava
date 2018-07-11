@@ -21,6 +21,7 @@ services:
 
   lava-worker:
     hostname: worker0
+    dns: 127.0.0.1
     restart: always
     build:
       context: ./lava-worker
