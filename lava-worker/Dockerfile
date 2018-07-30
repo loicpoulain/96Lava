@@ -31,6 +31,10 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -q -y install \
     simg2img \
     img2simg
 
+RUN DEBIAN_FRONTEND=noninteractive apt-get -q -y install \
+    python-pip && \
+    pip install --pre -U pyocd
+
 # Add board specific init script
 ARG board=db820c
 COPY scripts/$board-init.sh /
