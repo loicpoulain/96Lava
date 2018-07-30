@@ -1,0 +1,4 @@
+# Dragonboard-410c_0
+SUBSYSTEM=="tty", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6015", ATTRS{serial}=="DA1WPWC7", SYMLINK+="ttyDB410C"
+# nrf52-nitrogen_0
+SUBSYSTEM=="tty", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6015", ATTRS{serial}=="DA1MBQPC", SYMLINK+="ttyNITROGEN"
