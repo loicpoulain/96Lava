@@ -1,0 +1,5 @@
+{% extends 'nrf52-nitrogen.jinja2' %}
+{% set hard_reset_command = '/nitrogen-ftdi.sh DA1MBQPC reset' %}
+{% set power_off_command = '/nitrogen-ftdi.sh DA1MBQPC off' %}
+{% set power_on_command = '/nitrogen-ftdi.sh DA1MBQPC on' %}
+{% set connection_command = 'telnet localhost 2001' %}
