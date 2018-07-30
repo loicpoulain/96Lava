@@ -3,6 +3,11 @@
 # Usage dragonboard-ftdi FTDI_SERIAL command
 # commands: reset, reset-fastboot
 
+if [ "$#" -ne 2 ]; then
+	echo "usage: $0 <ftdi_serial> <reset|reset-fastboot|on|off>"
+	exit -1
+fi
+
 # Find ftdi sysfs path
 USB_DEVICES=$(find -L /sys/bus/usb/devices/ -maxdepth 3 -name "serial" 2> /dev/null)
 for i in ${USB_DEVICES}; do
