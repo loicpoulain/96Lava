@@ -1,0 +1,35 @@
+From bf3d3584a8524abd67a3235881303960a32770e3 Mon Sep 17 00:00:00 2001
+From: Loic Poulain <loic.poulain@linaro.org>
+Date: Tue, 31 Jul 2018 11:03:43 +0200
+Subject: [PATCH] pyocd: Run connect action before flashing
+
+The DUT runs new firmware once flashing via pyocd is completed.
+This can be very quick and booting potentially happens before we
+even run the connect action. This can cause job failure because
+dispatcher misses the booting string (e.g. "BOOTING ZEPHYR OS").
+
+This patch fixes this by moving connect action before flashing.
+This has been tested with a 96Boards nitrogen + zephyr firmware.
+
+Change-Id: Icdd48d0913294d2d22f5a7f96fd7a9bb27caebe7
+---
+ lava_dispatcher/actions/boot/pyocd.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/usr/lib/python3/dist-packages/lava_dispatcher/actions/boot/pyocd.py b/usr/lib/python3/dist-packages/lava_dispatcher/actions/boot/pyocd.py
+index 3e54c00..d9e1e47 100644
+--- a/usr/lib/python3/dist-packages/lava_dispatcher/actions/boot/pyocd.py
++++ b/usr/lib/python3/dist-packages/lava_dispatcher/actions/boot/pyocd.py
+@@ -78,8 +78,8 @@ class BootPyOCDRetry(RetryAction):
+         if self.job.device.hard_reset_command:
+             self.internal_pipeline.add_action(ResetDevice())
+             self.internal_pipeline.add_action(WaitDeviceBoardID(self.job.device.get('board_id')))
+-        self.internal_pipeline.add_action(FlashPyOCDAction())
+         self.internal_pipeline.add_action(ConnectDevice())
++        self.internal_pipeline.add_action(FlashPyOCDAction())
+ 
+ 
+ class FlashPyOCDAction(Action):
+-- 
+2.7.4
+
