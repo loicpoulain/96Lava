@@ -57,10 +57,11 @@ GPIO_RESET=/sys/class/gpio/gpio${GPIO_RESET}/value
 GPIO_VOLDOWN=/sys/class/gpio/gpio${GPIO_VOLDOWN}/value
 
 if [ "$2" = "reset-fastboot" ]; then
-	echo 0 > ${GPIO_RESET}
 	echo 0 > ${GPIO_VOLDOWN}
-	sleep 15
+	echo 0 > ${GPIO_RESET}
+	sleep 13
 	echo 1 > ${GPIO_RESET}
+	sleep 3
 	echo 1 > ${GPIO_VOLDOWN}
 elif [ "$2" = "reset" ]; then
 	echo 0 > ${GPIO_RESET}
