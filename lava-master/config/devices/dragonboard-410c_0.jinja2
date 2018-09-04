@@ -3,26 +3,12 @@
 {% set pre_os_command = '/dragonboard-ftdi.sh DA1WPWC7 reset' %}
 {% set power_off_command = '/dragonboard-ftdi.sh DA1WPWC7 off' %}
 {% set power_on_command = '/dragonboard-ftdi.sh DA1WPWC7 on' %}
+{% set connection_command = '/dragonboard-ftdi.sh DA1WPWC7 connect' %}
 {% set fastboot_serial_number = '430d3c68' %}
 {% set device_info = [{'board_id': '430d3c68'}] %}
 {% set adb_serial_number = '430d3c68' %}
-{% set connection_command = 'telnet localhost 2000' %}
 {% set pre_power_command= 'sleep 0' %}
 
-{% set flash_cmds_order = ['update',
-'ptable',
-'partition',
-'hyp',
-'modem',
-'rpm',
-'sbl1',
-'sbl2',
-'sec',
-'tz',
-'aboot',
-'boot',
-'rootfs',
-'vendor',
-'system',
-'cache',
-'userdata'] %}
+{% set flash_cmds_order = ['update','ptable','partition','hyp','modem',
+'rpm', 'sbl1','sbl2','sec','tz','aboot','boot','rootfs','vendor','system',
+'cache','userdata'] %}

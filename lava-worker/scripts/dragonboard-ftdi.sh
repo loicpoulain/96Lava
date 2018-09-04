@@ -25,6 +25,13 @@ fi
 
 echo "Found FTDI at ${FTDI}"
 
+if [ "$2" = "connect" ]; then
+	TTY=`find ${FTDI}/* -name ttyUSB* | tail -n1`
+	TTY=`basename ${TTY}`
+	microcom -p /dev/${TTY} -s 115200
+	exit 0
+fi
+
 # Find base GPIO
 GPIO_BASE=$(cat ${FTDI}/gpio/gpiochip*/base)
 
