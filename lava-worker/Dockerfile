@@ -1,26 +1,27 @@
 FROM debian:stretch-backports
 
-RUN apt -q update && DEBIAN_FRONTEND=noninteractive apt-get -q -y upgrade
+# Update package list and upgrade
+RUN apt -q update
+
+# Install prerequisites
 RUN DEBIAN_FRONTEND=noninteractive apt-get -q -y install \
     wget \
     gnupg \
     apt-transport-https
 
-RUN echo "deb https://images.validation.linaro.org/production-repo stretch-backports main" >> /etc/apt/sources.list
-RUN wget https://images.validation.linaro.org/staging-repo/staging-repo.key.asc \
-    && apt-key add staging-repo.key.asc
+# Add Linaro Lava repository to apt sources, Register auth key
+RUN echo "deb https://images.validation.linaro.org/production-repo stretch-backports main" >> /etc/apt/sources.list.d/lava.list
+RUN wget -qO - https://images.validation.linaro.org/staging-repo/staging-repo.key.asc | apt-key add -
 
-RUN apt -q update && DEBIAN_FRONTEND=noninteractive apt-get -q -y upgrade
-
-RUN DEBIAN_FRONTEND=noninteractive apt-get -q -y install \
-    lava-dispatcher
-
-# TODO clean me
-COPY config/linaro.list /etc/apt/sources.list.d/
+# Add Linaro buster repository, some arm64 tools not available in standard source (e.g. simg2img)
+RUN echo "deb http://obs.linaro.org/linaro-overlay-buster/buster/ ./" >> /etc/apt/sources.list.d/linaro.list
 RUN wget -qO - http://obs.linaro.org/linaro-overlay-buster/buster/Release.key | apt-key add -
+
 RUN apt -q update
 
+# Install lava-dispatcher and required tools
 RUN DEBIAN_FRONTEND=noninteractive apt-get -q -y install \
+    lava-dispatcher \
     qemu-system \
     qemu-system-arm \
     qemu-system-i386 \
@@ -29,16 +30,10 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -q -y install \
     nfs-kernel-server \
     python-netifaces \
     simg2img \
-    img2simg
-
-RUN apt -q update && \
-    DEBIAN_FRONTEND=noninteractive apt-get -q -y install \
+    img2simg \
+    microcom \
     python-pip && \
     pip install --pre -U pyocd
-
-# Add board specific init script
-ARG board=db820c
-COPY scripts/$board-init.sh /
 
 COPY scripts/start.sh /
 COPY scripts/stop.sh /
@@ -59,5 +54,4 @@ RUN find /patches -type f -name '*.patch' -print0 | xargs -0 cat | patch -F 50 -
 RUN echo "MASTER_URL=\"tcp://lava-master:5556\"" >> /etc/lava-dispatcher/lava-slave
 RUN echo "LOGGER_URL=\"tcp://lava-master:5555\"" >> /etc/lava-dispatcher/lava-slave
 
-#CMD /start.sh && sleep infinity
-CMD /db820c-init.sh && /start.sh && sleep infinity
+CMD /start.sh && sleep infinity
