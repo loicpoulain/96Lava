@@ -45,3 +45,14 @@ services:
     network_mode: "host"
     extra_hosts:
       - "lava-master:127.0.0.1" # local-instance
+
+  wifi-tester:
+    hostname: wifi-tester
+    restart: always
+    build:
+      context: ./wifi-tester
+      args:
+        ssid: LAVA_WIFI
+        password: lavatest
+    privileged: true
+    network_mode: "host"
