@@ -56,3 +56,13 @@ services:
         password: lavatest
     privileged: true
     network_mode: "host"
+
+  bluetooth-tester:
+    hostname: bluetooth-tester
+    restart: always
+    build:
+      context: ./bluetooth-tester
+      args:
+        name: LAVA_BT
+    privileged: true
+    network_mode: "host"
