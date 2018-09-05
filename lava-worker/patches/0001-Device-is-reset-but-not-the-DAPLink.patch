@@ -1,0 +1,25 @@
+From 70e6d53fa8fcb3eab4942dc8264bd1377f66d7d5 Mon Sep 17 00:00:00 2001
+From: Loic Poulain <loic.poulain@linaro.org>
+Date: Wed, 5 Sep 2018 13:13:29 +0200
+Subject: [PATCH] Device is reset but not the DAPLink
+
+Change-Id: I9bd235ad2077eec41a702b0d2c8e4f8c16855ae7
+Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+---
+ lava_dispatcher/actions/boot/pyocd.py | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/usr/lib/python3/dist-packages/lava_dispatcher/actions/boot/pyocd.py b/usr/lib/python3/dist-packages/lava_dispatcher/actions/boot/pyocd.py
+index 3e54c00..52af024 100644
+--- a/usr/lib/python3/dist-packages/lava_dispatcher/actions/boot/pyocd.py
++++ b/usr/lib/python3/dist-packages/lava_dispatcher/actions/boot/pyocd.py
+@@ -77,7 +77,6 @@ class BootPyOCDRetry(RetryAction):
+         self.internal_pipeline = Pipeline(parent=self, job=self.job, parameters=parameters)
+         if self.job.device.hard_reset_command:
+             self.internal_pipeline.add_action(ResetDevice())
+-            self.internal_pipeline.add_action(WaitDeviceBoardID(self.job.device.get('board_id')))
+         self.internal_pipeline.add_action(FlashPyOCDAction())
+         self.internal_pipeline.add_action(ConnectDevice())
+
+--
+2.7.4
