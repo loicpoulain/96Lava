@@ -28,6 +28,7 @@ echo "Found FTDI at ${FTDI}"
 if [ "$2" = "connect" ]; then
 	TTY=`find ${FTDI}/* -name ttyUSB* | tail -n1`
 	TTY=`basename ${TTY}`
+	rm /var/lock/LCK..${TTY}
 	microcom -p /dev/${TTY} -s 115200
 	exit 0
 fi
