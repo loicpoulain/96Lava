@@ -1,0 +1,103 @@
+device_type: dragonboard-410c
+
+job_name: lxc-dragonboard-410c
+timeouts:
+  job:
+    minutes: 90
+  action:
+    minutes: 15
+  connection:
+    minutes: 2
+priority: medium
+visibility: public
+
+metadata:
+  source: https://git.linaro.org/lava/lava-lab.git
+  path: shared/health-checks/dragonboard-410c.yaml
+
+protocols:
+  lava-lxc:
+    name: lxc-db410c-test
+    template: debian
+    distribution: debian
+    release: jessie
+    arch: armhf
+    mirror: http://mirror.bytemark.co.uk/debian
+    verbose: true
+
+actions:
+- deploy:
+    namespace: tlxc
+    timeout:
+      minutes: 10
+    to: lxc
+    packages:
+    - android-tools-adb
+    - android-tools-fastboot
+    - systemd
+    - systemd-sysv
+    os: debian
+
+- boot:
+    namespace: tlxc
+    prompts:
+    - 'root@(.*):/#'
+    - 'root@linaro-developer:~#'
+    - 'root@dragonboard-410c:~#'
+    timeout:
+      minutes: 5
+    method: lxc
+
+- deploy:
+    timeout:
+      minutes: 40
+    to: fastboot
+    namespace: droid
+    images:
+      boot:
+        url: http://file-server:8080/dragonboard/boot--4.14-r0-dragonboard-410c-20180208191510-55-55.img
+      rootfs:
+        url: http://file-server:8080/dragonboard/rpb-console-image-dragonboard-410c-20180208191510-55.rootfs.img.gz
+        compression: gz
+        apply-overlay: true
+    os: debian
+    protocols:
+        lava-lxc:
+        - action: fastboot-deploy
+          request: pre-power-command
+          timeout:
+              minutes: 2
+
+- boot:
+    namespace: droid
+    prompts:
+    - 'root@(.*):/#'
+    - 'root@linaro-developer:~#'
+    - 'root@dragonboard-410c:~#'
+    timeout:
+      minutes: 15
+    method: fastboot
+    protocols:
+      lava-lxc:
+      - action: auto-login-action
+        request: pre-os-command
+        timeout:
+          minutes: 2
+
+- test:
+    namespace: droid
+    timeout:
+      minutes: 30
+    definitions:
+    - from: inline
+      name: wifi-connect
+      path: inline/wifi-connect.yaml
+      repository:
+        metadata:
+          description: Connect to wifi and retrieve IP address
+          format: Lava-Test Test Definition 1.0
+          name: wifi-connect
+        run:
+          steps:
+          - nmcli dev wifi connect LAVA_WIFI password lavatest
+          - if [ $? -eq 0 ]; then echo "wifi-ping: pass"; else echo "wifi-ping: fail";
