@@ -1,6 +1,12 @@
 {% extends 'db410c-uboot.jinja2' %}
 {% set exclusive = 'True' %}
-{% set connection_command = 'telnet localhost 2000' %}
-{% set hard_reset_command = '/gpio.sh 23 off' %}
-{% set power_off_command = '/gpio.sh 23 off' %}
-{% set power_on_command = '/gpio.sh 23 on' %}
+{% set hard_reset_command = '/dragonboard-ftdi.sh DA1WPWC7 reset' %}
+{% set power_off_command = '/dragonboard-ftdi.sh DA1WPWC7 off' %}
+{% set power_on_command = '/dragonboard-ftdi.sh DA1WPWC7 on' %}
+{% set connection_command = '/dragonboard-ftdi.sh DA1WPWC7 connect' %}
+
+## old version:
+## {% set connection_command = 'telnet localhost 2000' %}
+## {% set hard_reset_command = '/gpio.sh 23 off' %}
+## {% set power_off_command = '/gpio.sh 23 off' %}
+## {% set power_on_command = '/gpio.sh 23 on' %}
